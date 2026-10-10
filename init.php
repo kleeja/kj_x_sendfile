@@ -366,11 +366,11 @@ if (!function_exists('kj_x_sendfile_configs')) {
 
         $file = $encode(substr($path, 2));
 
-        if ($config['kj_x_sendfile_type'] == 'nginx') {
+        if ($config['kj_x_sendfile_type'] === 'nginx') {
             // an address on this server, in the folder of the script that runs: do.php, or serve.php for pretty URLs,
             // so it works for Kleeja in a subfolder too
             $folder = str_replace('\\', '/', dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '/')));
-            $folder = $folder == '.' ? '' : trim($folder, '/');
+            $folder = $folder === '.' ? '' : trim($folder, '/');
 
             return 'X-Accel-Redirect: /' . ($folder === '' ? '' : $encode($folder) . '/') . $file;
         }
@@ -414,9 +414,9 @@ if (!function_exists('kj_x_sendfile_configs')) {
         $prefix = 'KJ_X_SENDFILE_HELP_' . $name;
         $section = ['type' => $type, 'title' => $words[$prefix . '_TITLE'] ?? '', 'items' => []];
 
-        for ($n = 1; isset($words[$prefix . ($type == 'faq' ? '_Q_' : '_') . $n]); $n++) {
+        for ($n = 1; isset($words[$prefix . ($type === 'faq' ? '_Q_' : '_') . $n]); $n++) {
             $section['items'][] =
-                $type == 'faq'
+                $type === 'faq'
                     ? ['q' => $words[$prefix . '_Q_' . $n], 'a' => $words[$prefix . '_A_' . $n] ?? '']
                     : $words[$prefix . '_' . $n];
         }
